@@ -8,6 +8,21 @@
 class BeulcoCalc {
 
   private $debug;
+  private $Vs;
+  private $Pst;
+  private $Psak;
+  private $Tmax;
+  private $glykol;
+  private $glykoltype;
+  private $e;
+  private $Ve;
+  private $Vwr;
+  private $VexpDatatype;
+  private $Vexp;
+  private $VexpInt;
+  private $VexpHalv;
+  private $artData;
+  private $expnsionskarl;
 
   public function __construct() {
     
@@ -18,43 +33,43 @@ class BeulcoCalc {
    * Returnerar nummret på kärlet
    */
   public function mainCalcExpansion($Vs, $Pst, $Psak, $Tmax, $glykol, $glykoltype, $debug) {
-    $this->debug = array('Vs' => $Vs, 'Pst' => $Pst, 'Psak' => $Psak, 'Tmax' => $Tmax, 'glykol' => $glykol, 'glykoltype' => $glykoltype);
+    $this->Vs = $Vs;
+    $this->Pst = $Pst;
+    $this->Psak = $Psak;
+    $this->Tmax = $Tmax;
+    $this->glykol = $glykol;
+    $this->glykoltype = $glykoltype;
 
-    //e= expansionsfaktor
+    //e = expansionsfaktor
     if ($glykol != 0) {
-      $e = $this->getExpansionsfaktor($glykol, $glykoltype);
+      $this->e = $this->getExpansionsfaktor($this->glykol, $this->glykoltype);
     } else {
-      $e = 1;
+      $this->e = 1;
     }
-    $this->debug['e'] = $e;
-
 
     //Ve = systemexpansion
-    $Ve = $Vs * $e;
-    $this->debug['Ve'] = $Ve;
+    $this->Ve = $this->Vs * $this->e;
 
     //Reservvolym:
     //Vwr= Vs*0,005, ska dock vara minst 3 liter.
-    $Vwr = $Vs * 0.005;
-    if ($Vwr < 3.0) {
-      $Vwr = 3;
+    $this->Vwr = $this->Vs * 0.005;
+    if ($this->Vwr < 3.0) {
+      $this->Vwr = 3;
     }
-    $this->debug['Vwr'] = $Vwr;
-
 
     //Minsta kärlstorlek:
     //Vexp=((Psäk*0,9)+1)/((Psäk*0,9)-(Pst/10))*(Ve+Vwr)
-    $Vexp = (($Psak * 0.9) + 1) / (($Psak * 0.9) - ($Pst / 10)) * ($Ve + $Vwr);
-    $this->debug['Vexp datatype'] = gettype($Vexp);
-    $this->debug['Vexp'] = $Vexp;
+    $this->Vexp = (($this->Psak * 0.9) + 1) / (($this->Psak * 0.9) - ($this->Pst / 10)) * ($this->Ve + $this->Vwr);
+    $this->VexpDatatype = gettype($this->Vexp);
 
-    $artData = $this->getArticleData($Vexp);
-    $this->debug['Expnsionskärl'] = $artData;
+    //välj expansionskärl
+    $this->artData = $this->getArticleData($this->Vexp);
 
-    if ($debug = 1) {
+    //skriv ut debugdata
+    if ($debug == 1) {
       $this->toString();
     }
-    return $Vexp;
+    return $this->artData;
   }
 
   /**
@@ -245,24 +260,25 @@ class BeulcoCalc {
 
     //avrunda till närmsta heltal uppåt
     settype($Vexp, "integer");
-    $this->debug['Vexp int'] = $Vexp;
+    $this->VexpInt = $Vexp;
 
-    if ($Vexp < 800) { //Vexp < 800 slå i tabellen
-      while (!array_key_exists($Vexp, $articles) && $Vexp < 800) {
-        $Vexp++;
+
+    if ($this->VexpInt < 800) { //Vexp < 800 slå i tabellen
+      while (!array_key_exists($this->VexpInt, $articles) && $this->VexpInt < 800) {
+        $this->VexpInt++;
       }
-      $article = $articles[$Vexp];
+      $article = $articles[$this->VexpInt];
       return $article;
     } else { //Vexp > 800 använd dubbla kärl
-      $Vlarge = $Vexp / 2;
-      settype($Vlarge, "integer");
-      while (!array_key_exists($Vlarge, $articles) && $Vlarge < 800) {
-        $Vlarge++;
+      $this->VexpHalv = $this->VexpInt / 2;
+      settype($this->VexpHalv, "integer");
+      while (!array_key_exists($this->VexpHalv, $articles) && $this->VexpHalv < 800) {
+        $this->VexpHalv++;
       }
-      $article = $articles[$Vlarge];
-      $article['nbr'] = 2;
+      $article = $articles[$this->VexpHalv];
+      $article['antal'] = 2;
       $ret = $article;
-      if ($Vexp > 800 && $Vexp <= 1150) {  //öppet kärl
+      if ($this->VexpInt > 800 && $this->VexpInt <= 1150) {  //öppet kärl
         $oppetkarl = array(
             Artnr => "0721359000",
             RSK => "5524100",
@@ -271,15 +287,34 @@ class BeulcoCalc {
             Djup_tryckh_mm => "220",
             Höjd_tryckh_mm => "700",
             Vikt_tryckh_kg => "22,3");
-        $ret[] = $oppetkarl;
+        $ret['öppetkärl'] = $oppetkarl;
       }
       return $ret;
     }
   }
 
+  /**
+   * Print all variables
+   */
   private function toString() {
+    $classVars = array('Vs' => $this->Vs,
+        'Pst' => $this->Pst,
+        'Psak' => $this->Psak,
+        'Tmax' => $this->Tmax,
+        'glykol' => $this->glykol,
+        'glykoltype' => $this->glykoltype,
+        'e' => $this->e,
+        'Ve' => $this->Ve,
+        'Vwr' => $this->Vwr,
+        'Vexp' => $this->Vexp,
+        'VexpDatatype' => $this->VexpDatatype,
+        'VexpInt' => $this->VexpInt,
+        'VexpHalv' => $this->VexpHalv,
+        'artData' => $this->artData,
+    );
+
     echo "<pre>";
-    print_r($this->debug);
+    print_r($classVars);
     echo"</pre>";
   }
 

@@ -47,31 +47,75 @@
       });
     </script>
 
+    <style type="text/css">
+      .mandatory{color:red;}
+      .box{padding:0 0 10px 10px;background-color:#e7e7e7;width:400px; float:left;}
+      .alone{padding:10px;}
+      input{width:40px;}
+      .label{font-weight:bold;}
+      .labels{width:215px; float:left;font-weight:bold;}
+      .inputs{width:100px; float:left;}
+      .clear{clear:both;}
+    </style>
+
+
+
+
   </head>
   <body>
-    Dimensionering av expansionskärl<br/>
+    <h2>Dimensionering av expansionskärl</h2>
 
-    <div>
-      Volym *
-      Systemvolym (l)<input type="text" name="sysvolume" value="75" id="sysvolume"/><br/>
-      Kulvert (l)<input type="text" name="culvert" value="20" id="culvert"/><br/>
-      Ackumulator (l)<input type="text" name="accumulator" value="5" id="accumulator" />
+    <div class="box">
+      <span class="label">Volym</span> <span class="mandatory">*</span> <br/>
+      <div class="labels">
+        Systemvolym (l)<br/>
+        Kulvert (l)<br/>
+        Ackumulator (l)
+      </div>
+      <div class="inputs">
+        <input type="text" name="sysvolume" value="75" id="sysvolume"/><br/>
+        <input type="text" name="culvert" value="20" id="culvert"/><br/>
+        <input type="text" name="accumulator" value="5" id="accumulator" />
+      </div>
     </div>
+    <div class="clear"></div>
 
-    <div>
-      Glykol
-      glykol (%)<input type="text" name="glykol" value="5" id="glykol" /><br/>
-      <input type="radio" value="Propylenglykol" name="glykoltype" id="glykoltype" checked>Propylenglykol<br/>
-      <input type="radio" value="Etylenglykol" name="glykoltype" id="glykoltype">Etylenglykol<br/>
+    <div class="alone">
+      <div class="labels">Statisk höjd (m)<span class="mandatory">*</span> </div>
+      <div class="inputs"><input type="text" name="pst" value="5" id="pst" /></div>
     </div>
+    <div class="clear"></div>
 
-  Statisk höjd (m)<input type="text" name="pst" value="5" id="pst" /> &nbsp;</br>
-  Säkerhetsventilens öppningstryck (bar)<input type="text" name="psak" value="2" id="psak" /> &nbsp;</br>
-  Maximal vattentemperatur(grader C)<input type="text" name="tmax" value="2" id="tmax" /> &nbsp;</br>
+    <div class="alone">
+      <div class="labels">Säkerhetsventilens öppningstryck (bar)<span class="mandatory">*</span></div>
+      <div class="inputs"><input type="text" name="psak" value="2" id="psak" /> &nbsp;</div>
+    </div>
+    <div class="clear"></div>
 
-  <input type="hidden" value="<?php echo $_GET["debug"]; ?>" id="debug"/>
-  <input type="submit" value="Beräkna expansionskärl" id="calc"/>
-  <div id="result"></div>
+    <div class="alone">
+      <div class="labels">Maximal vattentemperatur(grader C)<span class="mandatory">*</span></div>
+      <div class="inputs"><input type="text" name="tmax" value="2" id="tmax" /></div>
+    </div>
+    <div class="clear"></div>
 
-</body>
+    <div class="box">
+      <span class="label">Glykol</span><br/>
+      <div class="labels">
+        glykol (%)<br/>
+        Propylenglykol<br/>
+        Etylenglykol
+      </div>
+      <div class="inputs">
+        <input type="text" name="glykol" value="5" id="glykol" /><br/>
+        <input type="radio" value="Propylenglykol" name="glykoltype" id="glykoltype" checked><br/>
+        <input type="radio" value="Etylenglykol" name="glykoltype" id="glykoltype">
+      </div>
+    </div>
+    <div class="clear"></div>
+
+    <input type="hidden" value="<?php echo $_GET["debug"]; ?>" id="debug"/>
+    <input type="submit" value="Beräkna expansionskärl" id="calc" style="width:auto;"/>
+    <div id="result"></div>
+
+  </body>
 </html>
