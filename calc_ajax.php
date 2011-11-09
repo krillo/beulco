@@ -1,9 +1,10 @@
 <?php
+
 /*
-foreach ($_POST as $name => $value) {
+  foreach ($_POST as $name => $value) {
   echo $name . " " . $value . '<br>';
-}
-*/
+  }
+ */
 
 require_once("BeulcoCalc.php");
 $bc = new BeulcoCalc();
@@ -12,14 +13,36 @@ $pst = $_POST["pst"];
 $psak = $_POST["psak"];
 $tmax = $_POST["tmax"];
 $glykol = $_POST["glykol"];
-$glykoltype = $_POST["glykoltype"];
-if(isset ($_POST["debug"])){
+$glykoltyp = $_POST["glykoltyp"];
+if (isset($_POST["debug"])) {
   $debug = $_POST["debug"];
 } else {
   $debug = 0;
 }
 
 
-$expansionskarl = $bc->mainCalcExpansion($vs,$pst,$psak,$tmax,$glykol,$glykoltype,$debug);
-print_r($expansionskarl);
-?>
+$expansionskarl = $bc->mainCalcExpansion($vs, $pst, $psak, $tmax, $glykol, $glykoltyp);
+echo '<div id="result-text" class="clear">';
+
+//dubbla kärl
+if ($expansionskarl['antal'] != 0) {
+  $text = 'Eftersom volymen överstiger 800 l föreslår vi att ni använder 2 st expansionskärl <a href="#" >%s</a>';
+  printf($text, $expansionskarl['Artnr']);
+  if($expansionskarl['öppetkärl'] != null){
+    //öppet kärl också
+    $text2 = '<br/>Alternativt får ni välja ett öppet kärl <a href="#" >%s</a>';
+    printf($text2, $expansionskarl['öppetkärl']['Artnr']);
+  }
+} else {
+//enkelt kärl
+  $text = 'Vi föreslår expansionskärlet: <a href="#" >%s</a>';
+  printf($text, $expansionskarl['Artnr']);
+}
+echo '</div><div class="clear"></div>';
+
+
+
+//if debug is enabled print all debug data
+if ($debug == 1) {
+  $bc->toString();
+}

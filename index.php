@@ -15,19 +15,25 @@
           var pst = $("#pst").val();
           var psak = $("#psak").val();
           var tmax = $("#tmax").val();
+
           var glykol = $("#glykol").val();
-          var glykoltype = $("#glykoltype").val();
-          var debug = $("#debug").val();
-          
           if(glykol == ''){
-            glykol = 0;
+            glykol = 0;                     //glykol är inte ifyllt
           }
+          var glykoltyp = '';
+          if($('#propylen').is(':checked')) {
+            glykoltyp = 'propylen';
+          } else {
+            glykoltyp = 'etylen';
+          }
+
+          var debug = $("#debug").val();
           if(debug != ''){
             dataString = 'debug=1&';
           }
 
           var vs = parseInt(sysvolume) + parseInt(culvert) + parseInt(accumulator);
-          var dataString = dataString + 'vs='+ vs + '&pst='+ pst + '&psak='+ psak + '&tmax='+ tmax + '&glykol=' + glykol + '&glykoltype=' + glykoltype;
+          var dataString = dataString + 'vs='+ vs + '&pst='+ pst + '&psak='+ psak + '&tmax='+ tmax + '&glykol=' + glykol + '&glykoltyp=' + glykoltyp;
 
           if(dataString==''){
           } else{
@@ -53,9 +59,11 @@
       .alone{padding:10px;}
       input{width:40px;}
       .label{font-weight:bold;}
-      .labels{width:215px; float:left;font-weight:bold;}
+      .labels{width:215px; float:left;}
       .inputs{width:100px; float:left;}
       .clear{clear:both;}
+      #debug{padding:10px;background-color:#e7e7e7;width:400px; float:left;}
+      #result-text{padding:10px;width:400px; float:left;}
     </style>
 
 
@@ -88,7 +96,7 @@
 
     <div class="alone">
       <div class="labels">Säkerhetsventilens öppningstryck (bar)<span class="mandatory">*</span></div>
-      <div class="inputs"><input type="text" name="psak" value="2" id="psak" /> &nbsp;</div>
+      <div class="inputs"><input type="text" name="psak" value="2" id="psak" /></div>
     </div>
     <div class="clear"></div>
 
@@ -107,8 +115,8 @@
       </div>
       <div class="inputs">
         <input type="text" name="glykol" value="5" id="glykol" /><br/>
-        <input type="radio" value="Propylenglykol" name="glykoltype" id="glykoltype" checked><br/>
-        <input type="radio" value="Etylenglykol" name="glykoltype" id="glykoltype">
+        <input type="radio" name="glykoltype" id="propylen" checked /><br/>
+        <input type="radio" name="glykoltype" id="etylen" />
       </div>
     </div>
     <div class="clear"></div>

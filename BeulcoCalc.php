@@ -13,14 +13,14 @@ class BeulcoCalc {
   private $Psak;
   private $Tmax;
   private $glykol;
-  private $glykoltype;
+  private $glykoltyp;
   private $e;
   private $Ve;
   private $Vwr;
   private $VexpDatatype;
   private $Vexp;
   private $VexpInt;
-  private $VexpHalv;
+  private $VexpHalv = 0;
   private $artData;
   private $expnsionskarl;
 
@@ -30,19 +30,20 @@ class BeulcoCalc {
 
   /**
    * Huvudmetoden - räknar ut expansionskärlet
-   * Returnerar nummret på kärlet
+   * Returnerar all data om kärlet i en array
+   * Om kärlet överstiger 800l då föreslås antingen 2st kärl eller alternativt ett öppet kärl, all data finns i samma array.
    */
-  public function mainCalcExpansion($Vs, $Pst, $Psak, $Tmax, $glykol, $glykoltype, $debug) {
+  public function mainCalcExpansion($Vs, $Pst, $Psak, $Tmax, $glykol, $glykoltyp) {
     $this->Vs = $Vs;
     $this->Pst = $Pst;
     $this->Psak = $Psak;
     $this->Tmax = $Tmax;
     $this->glykol = $glykol;
-    $this->glykoltype = $glykoltype;
+    $this->glykoltyp = $glykoltyp;
 
     //e = expansionsfaktor
     if ($glykol != 0) {
-      $this->e = $this->getExpansionsfaktor($this->glykol, $this->glykoltype);
+      $this->e = $this->getExpansionsfaktor($this->glykol, $this->glykoltyp);
     } else {
       $this->e = 1;
     }
@@ -65,23 +66,21 @@ class BeulcoCalc {
     //välj expansionskärl
     $this->artData = $this->getArticleData($this->Vexp);
 
-    //skriv ut debugdata
-    if ($debug == 1) {
-      $this->toString();
-    }
     return $this->artData;
   }
 
   /**
-   * calculate expansionfaktor by glykol
+   * räknar ut expansionfaktor med glykolhalt och glykoltyp
    * @return <type> 
    */
-  private function getExpansionsfaktor($glykol, $glykoltype) {
+  private function getExpansionsfaktor($glykol, $glykoltyp) {
     return 0.5;
   }
 
   /**
    * Hitta nästa störe kärl och returnera den
+   * Om kärlet överstiger 800l då föreslås antingen 2st kärl eller alternativt ett öppet kärl, all data finns i samma array.
+   * @return array expansionskärlsdata
    */
   private function getArticleData($Vexp) {
     $articles = array(
@@ -294,15 +293,15 @@ class BeulcoCalc {
   }
 
   /**
-   * Print all variables
+   * Skriv ut alla variabler
    */
-  private function toString() {
+  public function toString() {
     $classVars = array('Vs' => $this->Vs,
         'Pst' => $this->Pst,
         'Psak' => $this->Psak,
         'Tmax' => $this->Tmax,
         'glykol' => $this->glykol,
-        'glykoltype' => $this->glykoltype,
+        'glykoltyp' => $this->glykoltyp,
         'e' => $this->e,
         'Ve' => $this->Ve,
         'Vwr' => $this->Vwr,
@@ -313,9 +312,9 @@ class BeulcoCalc {
         'artData' => $this->artData,
     );
 
-    echo "<pre>";
+    echo '<div id="debug"><pre><h4>Debug utskrift</h4>';
     print_r($classVars);
-    echo"</pre>";
+    echo"</pre></div>";
   }
 
 }
