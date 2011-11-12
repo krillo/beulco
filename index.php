@@ -3,6 +3,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js'></script>
+    <link rel="stylesheet" href="http://www.beulco.se/templates/beulco_template/css/template.css" type="text/css" />
     <title>beulco</title>
 
     <script type="text/javascript">
@@ -59,11 +60,12 @@
       .alone{padding:10px;}
       input{width:40px;}
       .label{font-weight:bold;}
+      .heading{font-weight:bold;margin-bottom: 15px;}
       .labels{width:215px; float:left;}
       .inputs{width:100px; float:left;}
       .clear{clear:both;}
       #debug{padding:10px;background-color:#e7e7e7;width:400px; float:left;}
-      #result-text{padding:10px;width:400px; float:left;}
+      #result-text{padding:10px;width:800px; float:left;}
     </style>
 
 
@@ -71,7 +73,7 @@
 
   </head>
   <body>
-    <h2>Dimensionering av expansionskärl</h2>
+    <div class="heading">Dimensionering av expansionskärl</div>
 
     <div class="box">
       <span class="label">Volym</span> <span class="mandatory">*</span> <br/>
@@ -81,28 +83,28 @@
         Ackumulator (l)
       </div>
       <div class="inputs">
-        <input type="text" name="sysvolume" value="75" id="sysvolume"/><br/>
-        <input type="text" name="culvert" value="20" id="culvert"/><br/>
-        <input type="text" name="accumulator" value="5" id="accumulator" />
+        <input type="text" name="sysvolume" value="0" id="sysvolume"/><br/>
+        <input type="text" name="culvert" value="0" id="culvert"/><br/>
+        <input type="text" name="accumulator" value="0" id="accumulator" />
       </div>
     </div>
     <div class="clear"></div>
 
     <div class="alone">
       <div class="labels">Statisk höjd (m)<span class="mandatory">*</span> </div>
-      <div class="inputs"><input type="text" name="pst" value="5" id="pst" /></div>
+      <div class="inputs"><input type="text" name="pst" value="0" id="pst" /></div>
     </div>
     <div class="clear"></div>
 
     <div class="alone">
       <div class="labels">Säkerhetsventilens öppningstryck (bar)<span class="mandatory">*</span></div>
-      <div class="inputs"><input type="text" name="psak" value="2" id="psak" /></div>
+      <div class="inputs"><input type="text" name="psak" value="0" id="psak" /></div>
     </div>
     <div class="clear"></div>
 
     <div class="alone">
       <div class="labels">Maximal vattentemperatur(grader C)<span class="mandatory">*</span></div>
-      <div class="inputs"><input type="text" name="tmax" value="2" id="tmax" /></div>
+      <div class="inputs"><input type="text" name="tmax" value="0" id="tmax" /></div>
     </div>
     <div class="clear"></div>
 
@@ -114,7 +116,7 @@
         Etylenglykol
       </div>
       <div class="inputs">
-        <input type="text" name="glykol" value="5" id="glykol" /><br/>
+        <input type="text" name="glykol" value="0" id="glykol" /><br/>
         <input type="radio" name="glykoltype" id="propylen" checked /><br/>
         <input type="radio" name="glykoltype" id="etylen" />
       </div>
