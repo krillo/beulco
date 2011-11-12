@@ -165,39 +165,6 @@ class BeulcoCalc {
         }
         break;
     }
-    /*
-
-      //vatten
-      if ($glykol == 0) {
-
-      } else if ($glykoltyp == 'propylen') {
-      while (!array_key_exists($this->Tmax, $propylen) && $this->Tmax < 81) {
-      $this->Tmax++;
-      }
-      $tempArray = $propylen[$this->Tmax];
-      if ((!is_array($tempArray)) || (!array_key_exists($this->Tmax, $propylen))) {
-      throw new Exception("Propylenglykol kan bar bli max 80 grader ");
-      } else {
-      while (!array_key_exists($this->Tmax, $propylen) && $this->Tmax < 81) {
-      $this->Tmax++;
-      }
-      $tempArray = $propylen[$this->Tmax];
-      if ((!is_array($tempArray)) || (!array_key_exists($this->Tmax, $propylen))) {
-      throw new Exception("Propylenglykol kan bar bli max 80 grader ");
-      }
-      }
-
-
-      return $e;
-      } else {
-      while (!array_key_exists($this->Tmax, $etylen) && $this->Tmax < 81) {
-      $this->Tmax++;
-      }
-      $e = $etylen[$this->Tmax][10];
-      return $e;
-      }
-     *
-     */
   }
 
   /**

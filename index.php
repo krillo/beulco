@@ -33,6 +33,7 @@
             dataString = 'debug=1&';
           }
 
+
           var vs = parseInt(sysvolume) + parseInt(culvert) + parseInt(accumulator);
           var dataString = dataString + 'vs='+ vs + '&pst='+ pst + '&psak='+ psak + '&tmax='+ tmax + '&glykol=' + glykol + '&glykoltyp=' + glykoltyp;
 
