@@ -1,9 +1,10 @@
 <?php
 
 /**
- * Description of BeulcoCalc
+ * BeulcoCalc klassen räknar ut vilket expansionskärl som ska användas
+ * Alla variabler är klassvariabler så att det ska vara enkelt att verifierauträkningar (debugga)
  *
- * @author make
+ * @author Kristian Erendi 2011-11-06
  */
 class BeulcoCalc {
 
@@ -25,12 +26,14 @@ class BeulcoCalc {
   private $expnsionskarl;
 
   public function __construct() {
+
   }
 
   /**
    * Huvudmetoden - räknar ut expansionskärlet
    * Returnerar all data om kärlet i en array
-   * Om kärlet överstiger 800l då föreslås antingen 2st kärl eller alternativt ett öppet kärl, all data finns i samma array.
+   * Om kärlet överstiger 800 liter då föreslås antingen 2st kärl eller alternativt ett öppet kärl.
+   * All data returners i en och samma array.
    */
   public function mainCalcExpansion($Vs, $Pst, $Psak, $Tmax, $glykol, $glykoltyp) {
     try {
@@ -41,37 +44,37 @@ class BeulcoCalc {
       $this->glykol = $glykol;
       $this->glykoltyp = $glykoltyp;
 
-//e = expansionsfaktor
+      //e = expansionsfaktor
       $this->e = $this->getExpansionsfaktor($this->glykoltyp);
 
-//Ve = systemexpansion
+      //Ve = systemexpansion
       $this->Ve = $this->Vs * $this->e;
 
-//Reservvolym:
-//Vwr= Vs*0,005, ska dock vara minst 3 liter.
+      //Reservvolym:
+      //Vwr= Vs*0,005, ska dock vara minst 3 liter.
       $this->Vwr = $this->Vs * 0.005;
       if ($this->Vwr < 3.0) {
         $this->Vwr = 3;
       }
 
-//Minsta kärlstorlek:
-//Vexp=((Psäk*0,9)+1)/((Psäk*0,9)-(Pst/10))*(Ve+Vwr)
+      //Minsta kärlstorlek:
+      //Vexp=((Psäk*0,9)+1)/((Psäk*0,9)-(Pst/10))*(Ve+Vwr)
       $this->Vexp = (($this->Psak * 0.9) + 1) / (($this->Psak * 0.9) - ($this->Pst / 10)) * ($this->Ve + $this->Vwr);
       $this->VexpDatatype = gettype($this->Vexp);
 
-//välj expansionskärl
+      //välj expansionskärl
       $this->artData = $this->getArticleData($this->Vexp);
 
       return $this->artData;
     } catch (Exception $ex) {
       echo $ex->getMessage();
-//echo $ex->getTraceAsString();
+      //echo $ex->getTraceAsString();
     }
   }
 
   /**
-   * räknar ut expansionfaktor beroende på temperatur och ev glykolhalt i % och glykoltyp
-   * använd klassvariabeln för Tmax och glykol för debugging
+   * Räknar ut expansionfaktor beroende på temperatur och ev glykolhalt i % och glykoltyp
+   * Använder klassvariabeln för Tmax och glykol
    * @return <type>
    */
   private function getExpansionsfaktor($glykoltyp) {
@@ -109,7 +112,7 @@ class BeulcoCalc {
         80 => array(10 => 0.029, 20 => 0.035, 30 => 0.04, 40 => 0.048, 50 => -1)
     );
 
-    
+
     switch ($glykoltyp) {
       case 'propylen':
         while (!array_key_exists($this->Tmax, $propylen) && $this->Tmax < 81) {
@@ -126,7 +129,7 @@ class BeulcoCalc {
             throw new Exception("Maximal glykolhalt 50 %");
           } else {
             $e = $tempArray[$this->glykol];
-            if($e == -1){
+            if ($e == -1) {
               throw new Exception("50% glykolhalt kan max bli 70 grader");
             }
             return $e;
@@ -148,13 +151,14 @@ class BeulcoCalc {
             throw new Exception("Maximal glykolhalt 50 %");
           } else {
             $e = $tempArray[$this->glykol];
-            if($e == -1){
+            if ($e == -1) {
               throw new Exception("50% glykolhalt kan max bli 70 grader");
             }
-            return $e;          }
+            return $e;
+          }
         }
         break;
-      default: //vatten
+      default: //rent vatten
         while (!array_key_exists($this->Tmax, $vatten) && $this->Tmax < 111) {
           $this->Tmax++;
         }
@@ -168,8 +172,8 @@ class BeulcoCalc {
   }
 
   /**
-   * Hitta nästa störe kärl och returnera den
-   * Om kärlet överstiger 800l då föreslås antingen 2st kärl eller alternativt ett öppet kärl, all data finns i samma array.
+   * Hitta nästa störe kärl map Vexp och returnera den
+   * Om kärlet överstiger 800 l då föreslås antingen 2st kärl eller alternativt ett öppet kärl.
    * @return array expansionskärlsdata
    */
   private function getArticleData($Vexp) {
@@ -383,7 +387,7 @@ class BeulcoCalc {
   }
 
   /**
-   * Skriv ut alla variabler
+   * Skriver ut alla variabler
    */
   public function toString() {
     $classVars = array('Vs' => $this->Vs,

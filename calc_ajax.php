@@ -1,5 +1,4 @@
 <?php
-
 /*
   foreach ($_POST as $name => $value) {
   echo $name . " " . $value . '<br>';
@@ -14,11 +13,6 @@ $psak = $_POST["psak"];
 $tmax = $_POST["tmax"];
 $glykol = $_POST["glykol"];
 $glykoltyp = $_POST["glykoltyp"];
-if (isset($_POST["debug"])) {
-  $debug = $_POST["debug"];
-} else {
-  $debug = 0;
-}
 
 
 $expansionskarl = $bc->mainCalcExpansion($vs, $pst, $psak, $tmax, $glykol, $glykoltyp);
@@ -41,8 +35,7 @@ if ($expansionskarl['antal'] != 0) {
 echo '</div><div class="clear"></div>';
 
 
-
 //if debug is enabled print all debug data
-if ($debug == 1) {
+if (isset($_POST["debug"])) {
   $bc->toString();
-}
+} 
