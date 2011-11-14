@@ -113,6 +113,11 @@ class BeulcoCalc {
     );
 
 
+    //vatten eller glykol
+    if ($this->glykol == 0) {
+      $glykoltyp = "vatten";
+    }
+
     switch ($glykoltyp) {
       case 'propylen':
         while (!array_key_exists($this->Tmax, $propylen) && $this->Tmax < 81) {
@@ -158,7 +163,7 @@ class BeulcoCalc {
           }
         }
         break;
-      default: //rent vatten
+      case 'vatten':
         while (!array_key_exists($this->Tmax, $vatten) && $this->Tmax < 111) {
           $this->Tmax++;
         }
@@ -167,6 +172,9 @@ class BeulcoCalc {
         } else {
           return $vatten[$this->Tmax];
         }
+        break;
+      default : //fel
+        throw new Exception("Något har gått fel med glykol och vattenblandningen");
         break;
     }
   }
