@@ -21,12 +21,16 @@
               required: true
             },
             psak: {
-              required: true,
+              required: true
             },
             tmax: {
               required: true,
               digits: true,
               range: [1, 110]
+            },
+            glykol:{
+              digits: true,
+              range: [0, 50]
             }
           },
           messages: {
@@ -39,12 +43,16 @@
               required: "Statiska höjden saknas"
             },
             psak: {
-              required: "Öppningstrycket saknas",
+              required: "Öppningstrycket saknas"
             },
             tmax: {
-              required: "Volymen saknas",
-              digits: "Volymen måste vara ett heltal",
+              required: "Temperaturen saknas",
+              digits: "Temperaturen måste vara ett heltal",
               range: jQuery.format("Temperaturen måste vara mellan 1 och 110 grader")
+            },
+            glykol: {
+             digits: "Glykolen måste vara ett heltal",
+             range: jQuery.format("Glykolen måste vara mellan 0 och 50 %")
             }
           }
         });
@@ -106,16 +114,16 @@
 
     <style type="text/css">
       .mandatory{color:red;}
-      .box{padding:0 0 10px 10px;background-color:#e7e7e7;width:650px; float:left;}
+      .box{padding:0 0 10px 10px;background-color:#e7e7e7;width:600px; float:left;}
       .alone{padding:10px;}
       input{width:40px;}
       .label{font-weight:bold;}
       .heading{font-weight:bold;margin-bottom: 15px;}
       .labels{width:240px; float:left;}
-      .inputs{width:400px; float:left;}
+      .inputs{width:350px; float:left;}
       .clear{clear:both;}
       #debug{padding:10px;background-color:#e7e7e7;width:400px; float:left;}
-      #result-text{padding:10px;width:900px; float:left;}
+      #result-text{padding:18px;width:500px; float:left;}
       .error{padding-left: 10px; color: red;}
     </style>
 

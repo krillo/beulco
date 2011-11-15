@@ -424,7 +424,7 @@ class BeulcoCalc {
                 Höjd_tryckh_mm => "700",
                 Vikt_tryckh_kg => "22,3")
         );
-        $this->Veopen = (int)$this->Ve;
+        $this->Veopen = (int) $this->Ve;
         while (!array_key_exists($this->Veopen, $oppetkarl) && $this->Veopen < 1150) {
           $this->Veopen++;
         }
@@ -443,17 +443,30 @@ class BeulcoCalc {
     if (is_array($expansionskarl)) {
       echo '<div id="result-text" class="clear">';
       //dubbla kärl
+      $success = false;
       if ($expansionskarl['antal'] != 0) {
-        $text = 'Vi föreslår vi att ni använder 2 st expansionskärl med med volymen %s liter,  artikelnummer %s och RSK-nummer %s.  <a href="http://www.beulco.se/index.php?option=com_webcatalog&view=productlist&Itemid=56&pid=20092&gid=20007&menuid=20007" target="_top">Till produktsidan</a>';
-        printf($text, $expansionskarl['Volym'], $expansionskarl['Artnr'], $expansionskarl['RSKnummer']);
+        if (array_key_exists('Volym', $expansionskarl)) {  //det finns verkligen två kärl som räcker
+          $text = '<div class="box">Vi föreslår vi att ni använder 2 st expansionskärl med med volymen %s liter,  artikelnummer %s och RSK-nummer %s  <a href="http://www.beulco.se/index.php?option=com_webcatalog&view=productlist&Itemid=56&pid=20092&gid=20007&menuid=20007" target="_top">Till produktsidan</a></div>';
+          printf($text, $expansionskarl['Volym'], $expansionskarl['Artnr'], $expansionskarl['RSKnummer']);
+          $success = true;
+        }
         if ($expansionskarl['öppetkärl'] != null) {
           //öppet kärl också
-          $text2 = '<br/>Alternativt får ni välja ett öppet kärl med volymen %s liter, artikelnummer %s och RSK-nummer %s.  <a href="http://www.beulco.se/index.php?option=com_webcatalog&view=productlist&Itemid=56&pid=20092&gid=20007&menuid=20007" target="_top">Till produktsidan</a>';
-          printf($text2, $expansionskarl['öppetkärl']['Volym_l'], $expansionskarl['öppetkärl']['Artnr'], $expansionskarl['öppetkärl']['RSK']);
+          if($success){
+            $prefix = 'Alternativt får ni välja';
+          } else {
+            $prefix = 'Vi föreslår vi att ni väljer';
+          }
+          $text2 = '<br/><div class="box">%s ett öppet kärl med volymen %s liter, artikelnummer %s och RSK-nummer %s  <a href="http://www.beulco.se/index.php?option=com_webcatalog&view=productlist&Itemid=56&pid=20092&gid=20007&menuid=20007" target="_top">Till produktsidan</a></div>';
+          printf($text2, $prefix, $expansionskarl['öppetkärl']['Volym_l'], $expansionskarl['öppetkärl']['Artnr'], $expansionskarl['öppetkärl']['RSK']);
+          $success = true;
+        }
+        if(!$success){
+          echo 'Kontakta oss så beräknar vi vilket kärl som behövs.';
         }
       } else {
         //enkelt kärl
-        $text = 'Vi föreslår expansionskärl med volymen %s liter, artikelnummer %s och RSK-nummer %s.  <a href="http://www.beulco.se/index.php?option=com_webcatalog&view=productlist&Itemid=56&pid=20092&gid=20007&menuid=20007" target="_top">Till produktsidan</a>';
+        $text = '<div class="box">Vi föreslår expansionskärl med volymen %s liter, artikelnummer %s och RSK-nummer %s  <a href="http://www.beulco.se/index.php?option=com_webcatalog&view=productlist&Itemid=56&pid=20092&gid=20007&menuid=20007" target="_top">Till produktsidan</a></div>';
         printf($text, $expansionskarl['Volym'], $expansionskarl['Artnr'], $expansionskarl['RSKnummer']);
       }
       echo '</div><div class="clear"></div>';
