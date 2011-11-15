@@ -106,16 +106,17 @@
 
     <style type="text/css">
       .mandatory{color:red;}
-      .box{padding:0 0 10px 10px;background-color:#e7e7e7;width:400px; float:left;}
+      .box{padding:0 0 10px 10px;background-color:#e7e7e7;width:650px; float:left;}
       .alone{padding:10px;}
       input{width:40px;}
       .label{font-weight:bold;}
       .heading{font-weight:bold;margin-bottom: 15px;}
-      .labels{width:215px; float:left;}
-      .inputs{width:100px; float:left;}
+      .labels{width:240px; float:left;}
+      .inputs{width:400px; float:left;}
       .clear{clear:both;}
       #debug{padding:10px;background-color:#e7e7e7;width:400px; float:left;}
-      #result-text{padding:10px;width:800px; float:left;}
+      #result-text{padding:10px;width:900px; float:left;}
+      .error{padding-left: 10px; color: red;}
     </style>
 
 
@@ -128,36 +129,33 @@
     <form  id="valuesForm" method="get" action="">
       <fieldset>
         <div class="box">
-          <span class="label">Totala volymen (l)</span> <span class="mandatory">*</span> <br/>
-          <div class="labels">
-            Systemvolym + Kulvert + Ackumulator
-          </div>
+          <div class="labels">Totala volymen (l)<span class="mandatory">*</span></div><br/>
+          <div class="labels">Systemvolym + Kulvert + Ackumulator</div>
           <div class="inputs">
             <input type="text" name="volume" value="" id="volume"/><br/>
           </div>
         </div>
         <div class="clear"></div>
 
-        <div class="alone">
+        <div class="box">
           <div class="labels">Statisk höjd (m)<span class="mandatory">*</span> </div>
           <div class="inputs"><input type="text" name="pst" value="" id="pst" /></div>
         </div>
         <div class="clear"></div>
 
-        <div class="alone">
+        <div class="box">
           <div class="labels">Säkerhetsventilens öppningstryck (bar)<span class="mandatory">*</span></div>
           <div class="inputs"><input type="text" name="psak" value="" id="psak" /></div>
         </div>
         <div class="clear"></div>
 
-        <div class="alone">
+        <div class="box">
           <div class="labels">Maximal vattentemperatur(grader C)<span class="mandatory">*</span></div>
           <div class="inputs"><input type="text" name="tmax" value="" id="tmax" /></div>
         </div>
         <div class="clear"></div>
 
         <div class="box">
-          <span class="label">Glykol</span><br/>
           <div class="labels">
             glykol (%)<br/>
             Propylenglykol<br/>
