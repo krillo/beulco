@@ -26,7 +26,7 @@
             tmax: {
               required: true,
               digits: true,
-              range: [1, 110]
+              range: [10, 110]
             },
             glykol:{
               digits: true,
@@ -35,20 +35,20 @@
           },
           messages: {
             volume: {
-              required: "Volymen saknas",
+              required: "Total vattenvolym saknas",
               digits: "Volymen måste vara ett heltal",
               min: jQuery.format("Volymen måste vara större än {0}")
             },
             pst: {
-              required: "Statiska höjden saknas"
+              required: "Statisk höjd saknas"
             },
             psak: {
-              required: "Öppningstrycket saknas"
+              required: "Öppningstryck saknas"
             },
             tmax: {
-              required: "Temperaturen saknas",
+              required: "Temperatur saknas",
               digits: "Temperaturen måste vara ett heltal",
-              range: jQuery.format("Temperaturen måste vara mellan 1 och 110 grader")
+              range: jQuery.format("Temperaturen måste vara mellan 10 och 110 &#8451;")
             },
             glykol: {
              digits: "Glykolen måste vara ett heltal",
@@ -116,15 +116,17 @@
       .mandatory{color:red;}
       .box{padding:0 0 10px 10px;background-color:#e7e7e7;width:600px; float:left;}
       .alone{padding:10px;}
-      input{width:40px;}
+      input{width:40px;text-align: center;}
       .label{font-weight:bold;}
       .heading{font-weight:bold;margin-bottom: 15px;}
       .labels{width:240px; float:left;}
+      .smaller{font-size: 8px;}
       .inputs{width:350px; float:left;}
       .clear{clear:both;}
       #debug{padding:10px;background-color:#e7e7e7;width:400px; float:left;}
       #result-text{padding:18px;width:500px; float:left;}
       .error{padding-left: 10px; color: red;}
+      .result-titel{font-weight:bold;margin-bottom: 10px;}
     </style>
 
 
@@ -132,13 +134,13 @@
 
   </head>
   <body>
-    <div class="heading">Dimensionering av expansionskärl</div>
+    <div class="heading">Dimensionering av expansionskärl för värmesystem enligt ISO-EN 12828</div>
 
     <form  id="valuesForm" method="get" action="">
       <fieldset>
         <div class="box">
-          <div class="labels">Totala volymen (l)<span class="mandatory">*</span></div><br/>
-          <div class="labels">Systemvolym + Kulvert + Ackumulator</div>
+          <div class="labels">Total systemvolym (l)<span class="mandatory">*</span></div><br/>
+          <div class="labels smaller">(Total vattenvolym inklusive kulvert och ackumulator)</div>
           <div class="inputs">
             <input type="text" name="volume" value="" id="volume"/><br/>
           </div>
@@ -158,14 +160,14 @@
         <div class="clear"></div>
 
         <div class="box">
-          <div class="labels">Maximal vattentemperatur(grader C)<span class="mandatory">*</span></div>
+          <div class="labels">Maximal drifttemperatur(&#8451;)<span class="mandatory">*</span></div>
           <div class="inputs"><input type="text" name="tmax" value="" id="tmax" /></div>
         </div>
         <div class="clear"></div>
 
         <div class="box">
           <div class="labels">
-            glykol (%)<br/>
+            G lykol (%)<br/>
             Propylenglykol<br/>
             Etylenglykol
           </div>
@@ -175,7 +177,16 @@
             <input type="radio" name="glykoltype" id="etylen" />
           </div>
         </div>
+        <div class="clear"></div>
+        <div class="box">
+          <div class="labels"><span class="mandatory">*</span> Nödvändiga uppgifter</div>
+        </div>
+        <div class="clear"></div>
+
+
+
       </fieldset>
+      
     </form>
     <div class="clear"></div>
 
