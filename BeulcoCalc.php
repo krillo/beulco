@@ -463,8 +463,8 @@ class BeulcoCalc {
   public function printResult($expansionskarl) {
     if (is_array($expansionskarl)) {
       echo '<div id="result-text" class="clear"><div class="result-titel clear">Beräkningsresultat:</div>';
-      $pretext = '<div class="box"> Utvidgning: %s &#37; <br/>Expansionsvolym: %s l<br/><br/>';
-      printf($pretext, $this->e_percent, $this->Ve);
+      $pretext = '<div class="box"> Utvidgning: %s &#37; <br/>Expansionsvolym: %s l <br/>Erforderlig kärlvolym: %s l<br/><br/>';
+      printf($pretext, $this->e_percent, $this->Ve, $this->VexpInt);
 
       //dubbla kärl
       $success = false;

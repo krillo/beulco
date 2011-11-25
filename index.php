@@ -140,10 +140,11 @@
       <fieldset>
         <div class="box">
           <div class="labels">Total systemvolym (l)<span class="mandatory">*</span></div><br/>
-          <div class="labels smaller">(Total vattenvolym inklusive kulvert och ackumulator)</div>
           <div class="inputs">
             <input type="text" name="volume" value="" id="volume"/><br/>
           </div>
+          <div class="labels smaller">(Total vattenvolym inklusive kulvert och ackumulator)</div>
+
         </div>
         <div class="clear"></div>
 
@@ -167,7 +168,7 @@
 
         <div class="box">
           <div class="labels">
-            G lykol (%)<br/>
+            Glykol (%)<br/>
             Propylenglykol<br/>
             Etylenglykol
           </div>
