@@ -473,7 +473,7 @@ class BeulcoCalc {
           if ($expansionskarl['öppetkärl'] != null){  //öppetkärl också - lite extra text
             echo 'Alternativ 1<br/>';
           }
-          $text .= 'Slutna expansionskärl, 2 x %s l, artikelnummer %s och RSK-nummer %s  <a href="http://www.beulco.se/index.php?option=com_webcatalog&view=productlist&Itemid=56&pid=20092&gid=20007&menuid=20007" target="_top">Till produktsidan</a></div>';
+          $text .= 'Slutna expansionskärl, 2 x %s l, artikelnummer %s och RSK-nummer %s  <a href="http://www.beulco.se/index.php?option=com_webcatalog&view=productlist&Itemid=56&pid=20092&gid=20007&menuid=20007" target="_blank">Till produktsidan</a></div>';
           printf($text, $expansionskarl['Volym'], $expansionskarl['Artnr'], $expansionskarl['RSKnummer']);
           $success = true;
         }
@@ -482,7 +482,7 @@ class BeulcoCalc {
           if($success){
             echo '<div class="box">Alternativ 2<br/> ';
           }
-          $text2 = 'Öppet expansionskärl %s l med tryckhållningsmodul (max driftryck 40 mvp), artikelnummer %s och RSK-nummer %s  <a href="http://www.beulco.se/index.php?option=com_webcatalog&view=productlist&Itemid=56&pid=20096&gid=20007&menuid=20007" target="_top">Till produktsidan</a></div>';
+          $text2 = 'Öppet expansionskärl %s l med tryckhållningsmodul (max driftryck 40 mvp), artikelnummer %s och RSK-nummer %s  <a href="http://www.beulco.se/index.php?option=com_webcatalog&view=productlist&Itemid=56&pid=20096&gid=20007&menuid=20007" target="_blank">Till produktsidan</a></div>';
           printf($text2, $expansionskarl['öppetkärl']['Volym_l'], $expansionskarl['öppetkärl']['Artnr'], $expansionskarl['öppetkärl']['RSK']);
           $success = true;
         }
@@ -491,7 +491,7 @@ class BeulcoCalc {
         }
       } else {
         //enkelt kärl
-        $text = 'Slutet expansionskärl, %s l, artikelnummer %s och RSK-nummer %s  <a href="http://www.beulco.se/index.php?option=com_webcatalog&view=productlist&Itemid=56&pid=20092&gid=20007&menuid=20007" target="_top">Till produktsidan</a></div>';
+        $text = 'Slutet expansionskärl, %s l, artikelnummer %s och RSK-nummer %s  <a href="http://www.beulco.se/index.php?option=com_webcatalog&view=productlist&Itemid=56&pid=20092&gid=20007&menuid=20007" target="_blank">Till produktsidan</a></div>';
         printf($text, $expansionskarl['Volym'], $expansionskarl['Artnr'], $expansionskarl['RSKnummer']);
       }
       echo '</div><div class="clear"></div>';

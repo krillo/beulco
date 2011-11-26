@@ -129,43 +129,30 @@
       .result-titel{font-weight:bold;margin-bottom: 10px;}
     </style>
 
-
-
-
   </head>
   <body>
     <div class="heading">Dimensionering av expansionskärl för värmesystem enligt ISO-EN 12828</div>
-
     <form  id="valuesForm" method="get" action="">
       <fieldset>
-        <div class="box">
-          <div class="labels">Total systemvolym (l)<span class="mandatory">*</span></div><br/>
-          <div class="inputs">
-            <input type="text" name="volume" value="" id="volume"/><br/>
-          </div>
-          <div class="labels smaller">(Total vattenvolym inklusive kulvert och ackumulator)</div>
-
+        <div class="box clear">
+          <div class="labels">Total systemvolym (l)<span class="mandatory">*</span><br/><span class="smaller">(Total vattenvolym inklusive kulvert och ackumulator)</span></div><br/>
+          <div class="inputs"><input type="text" name="volume" value="" id="volume"/><br/></div>
         </div>
-        <div class="clear"></div>
-
         <div class="box">
           <div class="labels">Statisk höjd (m)<span class="mandatory">*</span> </div>
           <div class="inputs"><input type="text" name="pst" value="" id="pst" /></div>
         </div>
         <div class="clear"></div>
-
         <div class="box">
           <div class="labels">Säkerhetsventilens öppningstryck (bar)<span class="mandatory">*</span></div>
           <div class="inputs"><input type="text" name="psak" value="" id="psak" /></div>
         </div>
         <div class="clear"></div>
-
         <div class="box">
           <div class="labels">Maximal drifttemperatur(&#8451;)<span class="mandatory">*</span></div>
           <div class="inputs"><input type="text" name="tmax" value="" id="tmax" /></div>
         </div>
         <div class="clear"></div>
-
         <div class="box">
           <div class="labels">
             Glykol (%)<br/>
@@ -183,17 +170,11 @@
           <div class="labels"><span class="mandatory">*</span> Nödvändiga uppgifter</div>
         </div>
         <div class="clear"></div>
-
-
-
-      </fieldset>
-      
+      </fieldset>      
     </form>
     <div class="clear"></div>
-
     <input type="hidden" value="<?php echo $_GET["debug"]; ?>" id="debug"/>
     <input type="submit" value="Beräkna expansionskärl" id="calc" style="width:auto;"/>
     <div id="result"></div>
-
   </body>
 </html>
