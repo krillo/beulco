@@ -114,7 +114,7 @@
 
     <style type="text/css">
       .mandatory{color:red;}
-      .box{padding:0 0 10px 10px;background-color:#e7e7e7;width:600px; float:left;}
+      .box{padding:0 0 10px 10px;background-color:#e7e7e7;width:700px; float:left;}
       .alone{padding:10px;}
       input{width:40px;text-align: center;}
       .label{font-weight:bold;}
@@ -122,11 +122,14 @@
       .labels{width:240px; float:left;}
       .smaller{font-size: 8px;}
       .inputs{width:350px; float:left;}
+      .volume{position:relative; top:-13px;}
       .clear{clear:both;}
       #debug{padding:10px;background-color:#e7e7e7;width:400px; float:left;}
       #result-text{padding:18px;width:500px; float:left;}
       .error{padding-left: 10px; color: red;}
       .result-titel{font-weight:bold;margin-bottom: 10px;}
+      #result-fat{font-weight: bold;}
+      #calc{width:auto;border:1px solid #ccc;}
     </style>
 
   </head>
@@ -134,12 +137,13 @@
     <div class="heading">Dimensionering av expansionskärl för värmesystem enligt ISO-EN 12828</div>
     <form  id="valuesForm" method="get" action="">
       <fieldset>
-        <div class="box clear">
+        <div class="box" >
           <div class="labels">Total systemvolym (l)<span class="mandatory">*</span><br/><span class="smaller">(Total vattenvolym inklusive kulvert och ackumulator)</span></div><br/>
-          <div class="inputs"><input type="text" name="volume" value="" id="volume"/><br/></div>
+          <div class="inputs volume" ><input type="text" name="volume" value="" id="volume"/></div>
         </div>
+        <div class="clear"></div>
         <div class="box">
-          <div class="labels">Statisk höjd (m)<span class="mandatory">*</span> </div>
+          <div class="labels">Statisk höjd (m)<span class="mandatory">*</span></div>
           <div class="inputs"><input type="text" name="pst" value="" id="pst" /></div>
         </div>
         <div class="clear"></div>
@@ -174,7 +178,8 @@
     </form>
     <div class="clear"></div>
     <input type="hidden" value="<?php echo $_GET["debug"]; ?>" id="debug"/>
-    <input type="submit" value="Beräkna expansionskärl" id="calc" style="width:auto;"/>
+    <br/>
+    <input type="submit" value="Beräkna expansionskärl" id="calc" />
     <div id="result"></div>
   </body>
 </html>

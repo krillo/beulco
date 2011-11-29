@@ -463,8 +463,8 @@ class BeulcoCalc {
   public function printResult($expansionskarl) {
     if (is_array($expansionskarl)) {
       echo '<div id="result-text" class="clear"><div class="result-titel clear">Beräkningsresultat:</div>';
-      $pretext = '<div class="box"> Utvidgning: %s &#37; <br/>Expansionsvolym: %s l <br/>Erforderlig kärlvolym: %s l<br/><br/>';
-      printf($pretext, $this->e_percent, $this->Ve, $this->VexpInt);
+      $pretext = '<div class="box">Expansionsvolym: %s l <br/> Utvidgning: %s &#37; <br/>Erforderlig kärlvolym: %s l<br/><br/> <div id="result-fat">';
+      printf($pretext, $this->Ve, $this->e_percent, number_format($this->Vexp, 2));
 
       //dubbla kärl
       $success = false;
@@ -494,7 +494,7 @@ class BeulcoCalc {
         $text = 'Slutet expansionskärl, %s l, artikelnummer %s och RSK-nummer %s  <a href="http://www.beulco.se/index.php?option=com_webcatalog&view=productlist&Itemid=56&pid=20092&gid=20007&menuid=20007" target="_blank">Till produktsidan</a></div>';
         printf($text, $expansionskarl['Volym'], $expansionskarl['Artnr'], $expansionskarl['RSKnummer']);
       }
-      echo '</div><div class="clear"></div>';
+      echo '</div></div><div class="clear"></div>';
     } else {
       //error message
       echo '<div id="result-text" class="clear error">';
