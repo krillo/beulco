@@ -87,6 +87,7 @@
             glykoltyp = 'etylen';
           }
 
+          dataString = '';
           var debug = $("#debug").val();
           if(debug != ''){
             dataString = 'debug=1&';

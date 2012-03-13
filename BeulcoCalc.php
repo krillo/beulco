@@ -29,7 +29,7 @@ class BeulcoCalc {
   private $expnsionskarl;
 
   public function __construct() {
-
+    
   }
 
   /**
@@ -47,8 +47,8 @@ class BeulcoCalc {
       $this->glykol = $glykol;
       $this->glykoltyp = $glykoltyp;
 
-      $this->calcPst();
-
+      //Ola ville ta bort denna säkerhetsmarginal 2012-02-27
+      //$this->calcPst();
       //e = expansionsfaktor
       $this->e = $this->getExpansionsfaktor($this->glykoltyp);
       $this->e_percent = $this->e * 100;
@@ -83,8 +83,8 @@ class BeulcoCalc {
    * Pst < 7 välj statisk höjd 7 meter
    * Pst ≥ 7 välj värdet i rutan plus 3 meter
    */
-  private function calcPst(){
-    if($this->Pst >= 7 ){
+  private function calcPst() {
+    if ($this->Pst >= 7) {
       $this->Pst = $this->Pst + 3;
     } else {
       $this->Pst = 7;
@@ -378,9 +378,10 @@ class BeulcoCalc {
             Maxarbetstryck => "6")
     );
 
-    //avrunda till närmsta heltal uppåt
-    settype($Vexp, "integer");
-    $this->VexpInt = $Vexp;
+    //avrunda till närmsta heltal uppåt, gör om till integer
+    $VexpInt = ceil($Vexp);
+    $VexpInt = (int) $VexpInt;
+    $this->VexpInt = $VexpInt;
 
 
     if ($this->VexpInt < 800) { //Vexp < 800 slå i tabellen
@@ -400,7 +401,7 @@ class BeulcoCalc {
       $ret = $article;
 
       //öppet kärl, använd Ve för att hitta rätt kärl
-      if ($this->VexpInt > 800 && $this->Ve <= 1150) {  
+      if ($this->VexpInt > 800 && $this->Ve <= 1150) {
         $oppetkarl = array(
             210 => array(
                 Artnr => "0721351000",
@@ -458,48 +459,56 @@ class BeulcoCalc {
   /**
    * Skriver ut resultatet.
    * Om inputparametern är en array då har ett kärl hittats
-   * Om något exceptions har kastats då skrivs det ut istället
+   * Om något exceptions har kastats då skrivs det ut istället.
+   * Om Pst > Psak föreslå inget kärl. Ola ville ha med detta 2012-02-27
    */
   public function printResult($expansionskarl) {
-    if (is_array($expansionskarl)) {
+    if ($this->Pst > $this->Psak) {
       echo '<div id="result-text" class="clear"><div class="result-titel clear">Beräkningsresultat:</div>';
-      $pretext = '<div class="box">Expansionsvolym: %s l <br/> Utvidgning: %s &#37; <br/>Erforderlig kärlvolym: %s l<br/><br/> <div id="result-fat">';
-      printf($pretext, $this->Ve, $this->e_percent, number_format($this->Vexp, 2));
-
-      //dubbla kärl
-      $success = false;
-      if ($expansionskarl['antal'] != 0) {
-        if (array_key_exists('Volym', $expansionskarl)) {  //det finns verkligen två kärl som räcker
-          if ($expansionskarl['öppetkärl'] != null){  //öppetkärl också - lite extra text
-            echo 'Alternativ 1<br/>';
-          }
-          $text .= 'Slutna expansionskärl, 2 x %s l, artikelnummer %s och RSK-nummer %s  <a href="http://www.beulco.se/index.php?option=com_webcatalog&view=productlist&Itemid=56&pid=20092&gid=20007&menuid=20007" target="_blank">Till produktsidan</a></div>';
-          printf($text, $expansionskarl['Volym'], $expansionskarl['Artnr'], $expansionskarl['RSKnummer']);
-          $success = true;
-        }
-        if ($expansionskarl['öppetkärl'] != null) {
-          //öppet kärl också
-          if($success){
-            echo '<div class="box">Alternativ 2<br/> ';
-          }
-          $text2 = 'Öppet expansionskärl %s l med tryckhållningsmodul (max driftryck 40 mvp), artikelnummer %s och RSK-nummer %s  <a href="http://www.beulco.se/index.php?option=com_webcatalog&view=productlist&Itemid=56&pid=20096&gid=20007&menuid=20007" target="_blank">Till produktsidan</a></div>';
-          printf($text2, $expansionskarl['öppetkärl']['Volym_l'], $expansionskarl['öppetkärl']['Artnr'], $expansionskarl['öppetkärl']['RSK']);
-          $success = true;
-        }
-        if(!$success){
-          echo 'Kontakta oss så beräknar vi vilket kärl som ni behöver.';
-        }
-      } else {
-        //enkelt kärl
-        $text = 'Slutet expansionskärl, %s l, artikelnummer %s och RSK-nummer %s  <a href="http://www.beulco.se/index.php?option=com_webcatalog&view=productlist&Itemid=56&pid=20092&gid=20007&menuid=20007" target="_blank">Till produktsidan</a></div>';
-        printf($text, $expansionskarl['Volym'], $expansionskarl['Artnr'], $expansionskarl['RSKnummer']);
-      }
-      echo '</div></div><div class="clear"></div>';
-    } else {
-      //error message
-      echo '<div id="result-text" class="clear error">';
-      echo $expansionskarl;
+      echo 'Eftersom statisk höjd är större än öppningstryck, föreslås inget kärl.';
       echo '</div><div class="clear"></div>';
+    } else {
+
+      if (is_array($expansionskarl)) {
+        echo '<div id="result-text" class="clear"><div class="result-titel clear">Beräkningsresultat:</div>';
+        $pretext = '<div class="box">Expansionsvolym: %s l <br/> Utvidgning: %s &#37; <br/>Erforderlig kärlvolym: %s l<br/><br/> <div id="result-fat">';
+        printf($pretext, $this->Ve, $this->e_percent, number_format($this->Vexp, 2, '.', ''));
+
+        //dubbla kärl
+        $success = false;
+        if ($expansionskarl['antal'] != 0) {
+          if (array_key_exists('Volym', $expansionskarl)) {  //det finns verkligen två kärl som räcker
+            if ($expansionskarl['öppetkärl'] != null) {  //öppetkärl också - lite extra text
+              echo 'Alternativ 1<br/>';
+            }
+            $text .= 'Slutna expansionskärl, 2 x %s l, artikelnummer %s och RSK-nummer %s  <a href="http://www.beulco.se/index.php?option=com_webcatalog&view=productlist&Itemid=56&pid=20092&gid=20007&menuid=20007" target="_blank">Till produktsidan</a><br/>';
+            printf($text, $expansionskarl['Volym'], $expansionskarl['Artnr'], $expansionskarl['RSKnummer']);
+            $success = true;
+          }
+          if ($expansionskarl['öppetkärl'] != null) {
+            //öppet kärl också
+            if ($success) {
+              echo '<br/>Alternativ 2<br/> ';
+            }
+            $text2 = 'Öppet expansionskärl %s l med tryckhållningsmodul (max driftryck 40 mvp), artikelnummer %s och RSK-nummer %s  <a href="http://www.beulco.se/index.php?option=com_webcatalog&view=productlist&Itemid=56&pid=20096&gid=20007&menuid=20007" target="_blank">Till produktsidan</a><br/>';
+            printf($text2, $expansionskarl['öppetkärl']['Volym_l'], $expansionskarl['öppetkärl']['Artnr'], $expansionskarl['öppetkärl']['RSK']);
+            $success = true;
+          }
+          if (!$success) {
+            echo 'Kontakta oss så beräknar vi vilket kärl som ni behöver.';
+          }
+        } else {
+          //enkelt kärl
+          $text = 'Slutet expansionskärl, %s l, artikelnummer %s och RSK-nummer %s  <a href="http://www.beulco.se/index.php?option=com_webcatalog&view=productlist&Itemid=56&pid=20092&gid=20007&menuid=20007" target="_blank">Till produktsidan</a><br/>';
+          printf($text, $expansionskarl['Volym'], $expansionskarl['Artnr'], $expansionskarl['RSKnummer']);
+        }
+        echo '</div></div><div class="clear"></div>';
+      } else {
+        //error message
+        echo '<div id="result-text" class="clear error">';
+        echo $expansionskarl;
+        echo '</div><div class="clear"></div>';
+      }
     }
   }
 
